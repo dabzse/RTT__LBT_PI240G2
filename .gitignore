@@ -1,0 +1,10 @@
+venv
+__pycache__
+
+.vscode
+.env
+
+# static
+# .secrets
+# settings_dev.py
+# settings_test.py
