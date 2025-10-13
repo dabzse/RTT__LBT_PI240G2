@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+actor "Látogató" as Visitor
+actor "Admin" as Admin
+actor "Automata Rendszer" as System
+
+rectangle "Jelöltkövető rendszer (ATS)" {
+    (Főoldal megtekintése) as view_home
+    (Rejtett bejelentkezési lehetőség észlelése) as hidden_login
+    (Bejelentkezés) as login
+    (Jelszó felfedése) as show_pwd
+    (Álláshirdetések megtekintése) as view_jobs
+    (Álláshirdetés teljes szövegének megtekintése) as job_detail
+    (Jelentkezések megtekintése) as view_apps
+    (Automatikus feldolgozás) as auto_process
+    (Fájlok rendszerezése és dátumozás) as organize_files
+    (Hiányzó mappák létrehozása) as create_folders
+    (Szabályok alapján osztályozás) as classify_rules
+    (JSON mentés) as json_save
+    (Kimutatás megtekintése) as view_report
+    (Nem megfelelő jelentkezések listázása) as invalid_list
+    (Problémás fájlok jelzése) as problem_notice
+}
+
+Visitor --> view_home
+Visitor --> hidden_login
+hidden_login --> login
+login --> show_pwd : <<include>>
+
+Admin --> login
+Admin --> view_jobs
+view_jobs --> job_detail : <<extend>>
+Admin --> view_apps
+view_apps --> auto_process : <<include>>
+auto_process --> organize_files : <<include>>
+auto_process --> create_folders : <<include>>
+auto_process --> classify_rules : <<include>>
+auto_process --> json_save : <<include>>
+
+Admin --> view_report
+view_report --> invalid_list : <<include>>
+view_report --> problem_notice : <<include>>
+
+System --> auto_process
+@enduml
