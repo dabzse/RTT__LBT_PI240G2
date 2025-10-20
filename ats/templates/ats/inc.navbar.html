@@ -11,7 +11,17 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Főoldal</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Jelöltek</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Álláshirdetések</a></li>
-                <li class="nav-item"><a class="nav-link text-danger bg-dark" href="#">>>> KILÉPÉS <<<</a></li>
+                {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <li class="nav-item"><a class="nav-link text-danger bg-dark" href="{% url 'logout' %}"> >>> KILÉPÉS <<< </a></li>
+                </form>
+                {% else %}
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <li class="nav-item"><a class="nav-link text-danger bg-dark" href="{% url 'login' %}">Bejelentkezés</a></li>
+                </form>
+                {% endif %}
             </ul>
         </div>
     </div>
