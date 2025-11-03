@@ -1,10 +1,10 @@
 ## FONTOS TUDNIVALÓK
 
-Van saját önéletrajz sablonunk, ami innen letölthető: **[önéletrajz sablon]()** \
-Annak örülnénk, ha ezt használná. Miért? Nem szeretnénk felesleges információt kapni! \
-Bármely nem releváns adat csökkentheti a megpályázott állásra való bejutást! \
-Amennyiben mégsem ezt használja, az is opció, ha a már meglévő önéletrajzát ennek alapján módosítja. \
-Biztosíthatom, hogy nem kell sok időt és energiát beletenni! Alább felsoroljuk, hogy mi kell és mi nem. \
+Van saját önéletrajz sablonunk, ami innen letölthető: **[önéletrajz sablon]()**  
+Annak örülnénk, ha ezt használná. Miért? Nem szeretnénk felesleges információt kapni!  
+Bármely nem releváns adat csökkentheti a megpályázott állásra való bejutást!  
+Amennyiben mégsem ezt használja, az is opció, ha a már meglévő önéletrajzát ennek alapján módosítja.  
+Biztosíthatom, hogy nem kell sok időt és energiát beletenni! Alább felsoroljuk, hogy mi kell és mi nem.  
 **Köszönjük!**
 
 ## ELVÁRT / KÖTELEZŐ DOLGOK

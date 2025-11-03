@@ -1,3 +1,5 @@
+import re
+
 from pathlib import Path
 
 from django.contrib import messages
@@ -54,15 +56,27 @@ def logout_view(request):
 def jobs_list(request):
     """Összes álláshirdetés kilistázása"""
     jobs = []
-    for file in JOBS_DIR.glob("[*-]*.md"):  # pl: [1-]backend.md
+    for file in JOBS_DIR.glob("[0-9]*-*.md"):
         if file.name == "snippet.md":
             continue
         job_id = file.stem.split("-")[0].strip("[]")
+        try:
+            text = file.read_text(encoding="utf-8")
+            first_line = next((ln for ln in text.splitlines() if ln.strip()), "")
+            title = first_line.lstrip('#').strip()
+        except (OSError, UnicodeDecodeError):
+            title = file.stem
+
         jobs.append({
             "id": job_id,
             "filename": file.name,
-            "title": file.stem,  # később az md első sorát is veheted
+            "title": title,
         })
+
+    try:
+        jobs.sort(key=lambda j: int(j['id']))
+    except (ValueError, TypeError):
+        pass
     return render(request, "ats/jobs.html", {"jobs": jobs})
 
 
@@ -77,18 +91,71 @@ def job_detail(request, job_id=None):
         }
         return render(request, "ats/job.html", context)
 
-    job_files = list(JOBS_DIR.glob(f"[{job_id}-]*.md"))
+    job_files = list(JOBS_DIR.glob(f"{job_id}-*.md"))
     if not job_files:
         context = {
             "job": None,
-            "content": f"<h1>Nincs ilyen álláshirdetés</h1>{snippet_html}",
+            "content": snippet_html,
         }
         return render(request, "ats/job.html", context)
 
     job_file = job_files[0]
-    content = markdown.markdown(job_file.read_text(encoding="utf-8"))
+    raw = job_file.read_text(encoding="utf-8")
+    lines = raw.splitlines()
+    first_index = None
+    for idx, ln in enumerate(lines):
+        if ln.strip():
+            first_index = idx
+            break
+
+    if first_index is None:
+        position = job_file.stem
+        body_md = ""
+    else:
+        position = lines[first_index].lstrip('#').strip() or job_file.stem
+        rest = lines[first_index+1:]
+        if rest and not rest[0].strip():
+            rest = rest[1:]
+        body_md = "\n".join(rest).strip()
+
+    def _normalize_nested_lists(md_text: str) -> str:
+        """2/4 szóközös beágyazott listák normalizálása"""
+        if not md_text:
+            return md_text
+
+        lines = md_text.splitlines()
+        out_lines = []
+        in_fence = False
+        fence_re = re.compile(r'^```')
+        for ln in lines:
+            if fence_re.match(ln):
+                in_fence = not in_fence
+                out_lines.append(ln)
+                continue
+            if in_fence:
+                out_lines.append(ln)
+                continue
+
+            m = re.match(r'^( {2})([-*+]\s+)(.*)$', ln)
+            if m:
+                out_lines.append('    ' + m.group(2) + m.group(3))
+                continue
+            m2 = re.match(r'^( {2})(\d+\.\s+)(.*)$', ln)
+            if m2:
+                out_lines.append('    ' + m2.group(2) + m2.group(3))
+                continue
+
+            out_lines.append(ln)
+
+        return "\n".join(out_lines)
+
+    if body_md:
+        body_md = _normalize_nested_lists(body_md)
+    content = markdown.markdown(body_md, extensions=["extra", "sane_lists"]) if body_md else ""
+
     context = {
         "job": job_id,
+        "position": position,
         "content": content + snippet_html,
     }
     return render(request, "ats/job.html", context)
@@ -97,5 +164,33 @@ def job_detail(request, job_id=None):
 def load_snippet():
     snippet_file = JOBS_DIR / "snippet.md"
     if snippet_file.exists():
-        return markdown.markdown(snippet_file.read_text(encoding="utf-8"))
+        raw = snippet_file.read_text(encoding="utf-8")
+        def _normalize(md_text: str) -> str:
+            if not md_text:
+                return md_text
+            lines = md_text.splitlines()
+            out_lines = []
+            in_fence = False
+            fence_re = re.compile(r'^```')
+            for ln in lines:
+                if fence_re.match(ln):
+                    in_fence = not in_fence
+                    out_lines.append(ln)
+                    continue
+                if in_fence:
+                    out_lines.append(ln)
+                    continue
+                m = re.match(r'^( {2})([-*+]\s+)(.*)$', ln)
+                if m:
+                    out_lines.append('    ' + m.group(2) + m.group(3))
+                    continue
+                m2 = re.match(r'^( {2})(\d+\.\s+)(.*)$', ln)
+                if m2:
+                    out_lines.append('    ' + m2.group(2) + m2.group(3))
+                    continue
+                out_lines.append(ln)
+            return "\n".join(out_lines)
+
+        normalized = _normalize(raw)
+        return markdown.markdown(normalized, extensions=["extra", "sane_lists"])
     return "<p>(üres)</p>"
