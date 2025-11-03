@@ -1,8 +1,12 @@
 from pathlib import Path
-from django.shortcuts import render
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 import markdown
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,19 +16,33 @@ JOBS_DIR = BASE_DIR / "jobs"
 def home(request):
     return render(request, "ats/home.html", {})
 
-
-def login_view(request):
+@csrf_exempt
+def ajax_login(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        email = request.POST.get("email")
         password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
+
+        user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
-            messages.info(request, "Sikeres bejelentkezés.")
-            return render(request, "ats/home.html", {})
+            return JsonResponse({"success": True})
         else:
-            messages.error(request, "Érvénytelen bejelentkezési adatok.")
-        return render(request, "ats/login.html", {})
+            return JsonResponse({"success": False, "error": "Hibás hitelesítés!"})
+    return JsonResponse({"success": False, "error": "Érvénytelen kérés."})
+
+
+# def login_view(request):
+#     if request.method == "POST":
+#         username = request.POST.get("username")
+#         password = request.POST.get("password")
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             messages.info(request, "Sikeres bejelentkezés.")
+#             return render(request, "ats/home.html", {})
+#         else:
+#             messages.error(request, "Érvénytelen bejelentkezési adatok.")
+#         return render(request, "ats/login.html", {})
 
 
 def logout_view(request):

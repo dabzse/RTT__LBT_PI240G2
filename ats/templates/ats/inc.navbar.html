@@ -17,9 +17,9 @@
                     <li class="nav-item"><a class="nav-link text-danger bg-dark" href="{% url 'logout' %}"> >>> KILÉPÉS <<< </a></li>
                 </form>
                 {% else %}
-                <form action="{% url 'login' %}" method="post">
+                <form action="{% url 'xlogin' %}" method="post">
                     {% csrf_token %}
-                    <li class="nav-item"><a class="nav-link text-danger bg-dark" href="{% url 'login' %}">Bejelentkezés</a></li>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#login_modal">Bejelentkezés</button>
                 </form>
                 {% endif %}
             </ul>

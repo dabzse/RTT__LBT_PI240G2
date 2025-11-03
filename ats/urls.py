@@ -8,7 +8,8 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
 
-    path('login/', views.login_view, name='login'),
+    path("ajax/login/", views.ajax_login, name="xlogin"),
+#    path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 
     path("jobs/", views.jobs_list, name="jobs-list"),
