@@ -1,5 +1,17 @@
 asgiref==3.9.1
+click==8.3.0
+colorama==0.4.6
+cssbeautifier==1.15.4
 Django==5.2.7
+djlint==1.36.4
+EditorConfig==0.17.1
+jsbeautifier==1.15.4
+json5==0.12.1
 Markdown==3.9
+pathspec==0.12.1
 python-dotenv==1.1.1
+PyYAML==6.0.3
+regex==2025.10.23
+six==1.17.0
 sqlparse==0.5.3
+tqdm==4.67.1
