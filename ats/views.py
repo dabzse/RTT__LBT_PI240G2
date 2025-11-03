@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 
 import markdown
@@ -48,7 +48,7 @@ def ajax_login(request):
 def logout_view(request):
     logout(request)
     messages.info(request, "Sikeres és biztonságos kijelentkezés.")
-    return render(request, "ats/logout.html", {})
+    return redirect("home")
 
 
 def jobs_list(request):
