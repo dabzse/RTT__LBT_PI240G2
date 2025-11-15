@@ -1,6 +1,6 @@
 ## FONTOS TUDNIVALÓK
 
-Van saját önéletrajz sablonunk, ami innen letölthető: **[önéletrajz sablon]()**  
+Van saját önéletrajz sablonunk, ami innen letölthető: **[önéletrajz sablon](#cvdl_modal)**  
 Annak örülnénk, ha ezt használná. Miért? Nem szeretnénk felesleges információt kapni!  
 Bármely nem releváns adat csökkentheti a megpályázott állásra való bejutást!  
 Amennyiben mégsem ezt használja, az is opció, ha a már meglévő önéletrajzát ennek alapján módosítja.  

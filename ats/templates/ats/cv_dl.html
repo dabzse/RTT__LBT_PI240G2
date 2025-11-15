@@ -1,0 +1,18 @@
+{% load static %}
+
+<dialog class="modal fade" id="cvdl_modal" tabindex="-1" aria-labelledby="cvdl_modal_label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Önéletrajzminták letöltése</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5 pt-0">
+                <div class="list-group">
+                    <a href="{% static 'downloads/cv_single_header.odt' %}" class="list-group-item list-group-item-action" download>Fejléc 1 sorral (ODT)</a>
+                    <a href="{% static 'downloads/cv_double_header.odt' %}" class="list-group-item list-group-item-action" download>Fejléc 2 sorral (ODT)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>
