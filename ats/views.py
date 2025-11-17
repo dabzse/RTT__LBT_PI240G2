@@ -16,7 +16,8 @@ JOBS_DIR = BASE_DIR / "jobs"
 
 
 def home(request):
-    return render(request, "ats/home.html", {})
+    snippet_html = load_snippet()
+    return render(request, "ats/home.html", {"snippet_html": snippet_html})
 
 @csrf_exempt
 def ajax_login(request):

@@ -1,4 +1,4 @@
-<div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="login_modal_label" aria-hidden="true">
+<dialog class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="login_modal_label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -12,9 +12,12 @@
                         <input type="email" class="form-control rounded-3" id="modal_email" name="email" placeholder="name@local.host" required>
                         <label for="modal_email">E-mail-cím</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3 position-relative">
                         <input type="password" class="form-control rounded-3" id="modal_password" name="password" placeholder="Password" required>
                         <label for="modal_password">Jelszó</label>
+                        <button type="button" id="modal_password_toggle" class="btn btn-sm btn-hidden" aria-label="Jelszó megjelenítése">
+                            <i class="bi bi-eye" aria-hidden="true"></i>
+                        </button>
                     </div>
                     <div id="login_error" class="text-danger small mb-2"></div>
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">BELÉPEK</button>
@@ -22,4 +25,4 @@
             </div>
         </div>
     </div>
-</div>
+</dialog>
