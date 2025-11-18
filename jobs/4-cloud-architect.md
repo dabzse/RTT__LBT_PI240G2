@@ -61,8 +61,8 @@ Csapatunkba tapasztalt Cloud Architect kollégát keresünk, aki komplex rendsze
 ---
 
 ### Jelentkezés
-Jelentkezni a career@nextscale.hu e-mail címen lehet, PDF formátumú önéletrajzzal,  
-illetve az ATS rendszerünkön keresztül a _„Cloud Architect”_ pozícióra.
+Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
+Lehetőség szerint a dokumentum neve: `<név>_CLOUD_ARCHITECT.pdf` legyen.
 
 ---
 
