@@ -52,8 +52,8 @@ Bővülő csapatunkba keresünk PHP fejlesztőt több szintre (junior, medior, s
 ---
 
 ### Jelentkezés
-Jelentkezni a hr@codebridge.hu e-mail címen lehet, PDF formátumú önéletrajzzal,  
-vagy az ATS rendszerünkben a _„PHP fejlesztő”_ pozíció kiválasztásával.
+Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
+Lehetőség szerint a dokumentum neve: `<név>_PHP_DEVELOPER.pdf` legyen.
 
 ---
 
