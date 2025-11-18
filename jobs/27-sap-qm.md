@@ -8,6 +8,7 @@ Jelentkezési határidő: 2025. december 31.
 ---
 
 ## Cégünkről
+
 A ProServ Systems Zrt. több mint 15 éve nyújt tanácsadási és fejlesztési szolgáltatásokat  
 SAP rendszerekhez, különös tekintettel az S/4HANA és SAP Cloud Platform megoldásokra.  
 A fejlesztői csapat munkájának támogatására keresünk tapasztalt, precíz  
@@ -17,6 +18,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 ---
 
 ## Feladatok
+
 - SAP fejlesztések és kódmódosítások funkcionális és technikai tesztelése  
 - Tesztforgatókönyvek, jegyzőkönyvek és dokumentációk készítése  
 - Hibák reprodukálása, naplózása és nyomon követése (Jira / SAP Solution Manager)  
@@ -26,6 +28,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 ---
 
 ## Elvárások
+
 - SAP rendszerek (S/4HANA, ECC) ismerete  
 - Alapvető ABAP kódolási logika megértése  
 - Tesztelési folyamatok és eszközök (pl. Jira, TestRail, ALM) ismerete  
@@ -35,6 +38,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 ---
 
 ## Előnyt jelent
+
 - ISTQB tanúsítvány  
 - Automatizált tesztelés (pl. SAP TAO, Tosca, Worksoft) ismerete  
 - SAP Solution Manager Test Suite gyakorlati tapasztalat  
@@ -43,6 +47,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 ---
 
 ## Amit kínálunk
+
 - Stabil, nemzetközi háttérrel rendelkező munkáltató  
 - Támogató szakmai közeg és belső képzési lehetőségek  
 - Modern irodai környezet és hibrid munkavégzés  
@@ -52,8 +57,9 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 ---
 
 ## Jelentkezés
-Jelentkezni a career@proserv.hu e-mail-címen lehet,  
-ATS-kompatibilis önéletrajz csatolásával (PDF, személyes adatok nélkül).
+
+Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
+Lehetőség szerint a dokumentum neve: `<név>_SAP_QA.pdf` legyen.
 
 ---
 
