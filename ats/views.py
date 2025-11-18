@@ -195,3 +195,7 @@ def load_snippet():
         normalized = _normalize(raw)
         return markdown.markdown(normalized, extensions=["extra", "sane_lists"])
     return "<p>(üres)</p>"
+
+
+def candidates_list(request):
+    return render(request, "ats/candidates.html", {})

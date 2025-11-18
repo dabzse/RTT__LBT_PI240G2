@@ -15,6 +15,7 @@ urlpatterns = [
     path("jobs/", views.jobs_list, name="jobs-list"),
     path("jobs/<int:job_id>/", views.job_detail, name="job-detail"),
     path("jobs/detail/", views.job_detail, name="job-detail-empty"),
+    path("candidates/", views.candidates_list, name="candidates-list"),
 ]
 
 if settings.DEBUG:
