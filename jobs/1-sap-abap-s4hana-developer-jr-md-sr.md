@@ -57,8 +57,8 @@ Fő profilunk az SAP S/4HANA alapú fejlesztés és integráció nemzetközi üg
 
 ### Jelentkezés
 
-Jelentkezésedet a karrier@desolutions.hu e-mail-címre várjuk PDF formátumú önéletrajzzal,
-vagy töltsd fel jelentkezésedet az ATS rendszerünkbe a _„SAP ABAP fejlesztő”_ pozícióra.
+Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
+Lehetőség szerint a dokumentum neve: `<név>_ABAP_S4HANA_DEVELOPER.pdf` legyen.
 
 ---
 
