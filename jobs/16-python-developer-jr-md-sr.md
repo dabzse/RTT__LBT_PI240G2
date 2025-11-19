@@ -1,4 +1,4 @@
-# Python fejlesztő (junior / medior / senior)
+## Python fejlesztő (junior / medior / senior)
 
 Munkavégzés helye: Budapest / hibrid  
 Munkavégzés típusa: Teljes munkaidő  
@@ -7,7 +7,7 @@ Jelentkezési határidő: 2025. december 31.
 
 ---
 
-## Cégünk röviden
+### Cégünk röviden
 
 A DataForge Technologies Kft. főként adatvezérelt web- és backend-rendszerek fejlesztésével foglalkozik.  
 Olyan projektekben dolgozunk, amelyek Python alapokon nyugszanak — legyen szó webes API-król, integrációkról vagy adatfeldolgozó folyamatokról.
@@ -18,7 +18,7 @@ Csapatunkba keresünk Python fejlesztőket több szintre, akik szeretnének stab
 
 ---
 
-## Feladatok
+### Feladatok
 
 - Webes és backend rendszerek fejlesztése Pythonban (FastAPI / Django)  
 - RESTful API-k és mikroszolgáltatások tervezése  
@@ -30,7 +30,7 @@ Csapatunkba keresünk Python fejlesztőket több szintre, akik szeretnének stab
 
 ---
 
-## Elvárások
+### Elvárások
 
 - Python nyelv ismerete (3.10+)  
 - Alapvető webfejlesztési ismeretek (HTTP, JSON, REST)  
@@ -42,7 +42,7 @@ Csapatunkba keresünk Python fejlesztőket több szintre, akik szeretnének stab
 
 ---
 
-## Előnyt jelent
+### Előnyt jelent
 
 - Tapasztalat FastAPI, Django vagy Flask framework-kel  
 - Docker, Kubernetes, vagy más konténeres megoldás ismerete  
@@ -52,7 +52,7 @@ Csapatunkba keresünk Python fejlesztőket több szintre, akik szeretnének stab
 
 ---
 
-## Amit kínálunk
+### Amit kínálunk
 
 - Szakmai mentorálás és karrierút mindhárom szinten  
 - Home office lehetőség és rugalmas munkaidő  
@@ -62,7 +62,7 @@ Csapatunkba keresünk Python fejlesztőket több szintre, akik szeretnének stab
 
 ---
 
-## Jelentkezés
+### Jelentkezés
 
 Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
 Lehetőség szerint a dokumentum neve: `<név>_PYTHON_DEVELOPER.pdf` legyen.

@@ -1,4 +1,4 @@
-# C++ fejlesztő (junior / medior / senior) — Rust ismeret előny
+## C++ fejlesztő (junior / medior / senior) — Rust ismeret előny
 
 Munkavégzés helye: Budapest / hibrid  
 Munkavégzés típusa: Teljes munkaidő  
@@ -7,7 +7,7 @@ Jelentkezési határidő: 2025. december 31.
 
 ---
 
-## Cégünk röviden
+### Cégünk röviden
 
 A CoreLogic Systems Zrt. nagy teljesítményű rendszerszoftverek, IoT-megoldások és hálózati komponensek fejlesztésével foglalkozik.  
 Termékeink világszerte több iparágban (autóipar, távközlés, fintech) működnek.  
@@ -15,7 +15,7 @@ Csapatunk bővítéséhez keresünk C++ fejlesztőket, akik szeretnének nagyvá
 
 ---
 
-## Feladatok
+### Feladatok
 
 - Nagy teljesítményű, többplatformos C++ alkalmazások fejlesztése  
 - Kódoptimalizálás, profilozás, hibakeresés  
@@ -25,7 +25,7 @@ Csapatunk bővítéséhez keresünk C++ fejlesztőket, akik szeretnének nagyvá
 
 ---
 
-## Elvárások
+### Elvárások
 
 - C++ nyelv ismerete (C++14 / C++17 / C++20)  
 - STL és objektumorientált programozási elvek ismerete  
@@ -35,7 +35,7 @@ Csapatunk bővítéséhez keresünk C++ fejlesztőket, akik szeretnének nagyvá
 
 ---
 
-## Előnyt jelent
+### Előnyt jelent
 
 - Rust programozási nyelv ismerete (alap vagy haladó szinten)  
 - Tapasztalat multithreaded, real-time vagy embedded rendszerekben  
@@ -45,7 +45,7 @@ Csapatunk bővítéséhez keresünk C++ fejlesztőket, akik szeretnének nagyvá
 
 ---
 
-## Amit kínálunk
+### Amit kínálunk
 
 - Stabil, hosszú távú munkalehetőség nemzetközi projektekben  
 - Modern fejlesztési környezet (C++20, Clang, CMake, Docker)  
@@ -55,7 +55,7 @@ Csapatunk bővítéséhez keresünk C++ fejlesztőket, akik szeretnének nagyvá
 
 ---
 
-## Jelentkezés
+### Jelentkezés
 
 Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
 Lehetőség szerint a dokumentum neve: `<név>_CPP_DEVELOPER.pdf` legyen.

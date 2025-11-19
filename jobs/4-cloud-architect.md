@@ -61,6 +61,7 @@ Csapatunkba tapasztalt Cloud Architect kollégát keresünk, aki komplex rendsze
 ---
 
 ### Jelentkezés
+
 Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
 Lehetőség szerint a dokumentum neve: `<név>_CLOUD_ARCHITECT.pdf` legyen.
 

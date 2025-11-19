@@ -1,4 +1,4 @@
-# Etikus hacker / Penetration Tester (min. CEH v9)
+## Etikus hacker / Penetration Tester (min. CEH v9)
 
 Munkavégzés helye: Budapest / hibrid (részben távoli munkavégzés lehetséges)  
 Munkavégzés típusa: Teljes munkaidő  
@@ -7,13 +7,13 @@ Jelentkezési határidő: 2025. december 31.
 
 ---
 
-## Cégünk röviden
+### Cégünk röviden
 
 A SecureWave Kft. vállalati és intézményi kliensek számára nyújt kiberbiztonsági szolgáltatásokat: penetrációs tesztek, sebezhetőség-felmérések és incident response. Célunk a biztonságos, megbízható rendszerek kialakítása és üzemeltetése.
 
 ---
 
-## Feladatok
+### Feladatok
 
 - Külső és belső penetrációs tesztek végrehajtása webalkalmazásokon, hálózatokon és szervereken  
 - Sebezhetőségek azonosítása, kockázatértékelés és javítási javaslatok készítése  
@@ -24,7 +24,7 @@ A SecureWave Kft. vállalati és intézményi kliensek számára nyújt kiberbiz
 
 ---
 
-## Elvárások
+### Elvárások
 
 - Minimum CEH v9 tanúsítvány (vagy azzal egyenértékű gyakorlati tapasztalat)  
 - Gyakorlati tapasztalat penetrációs tesztekben (web, hálózat, szerver)  
@@ -35,7 +35,7 @@ A SecureWave Kft. vállalati és intézményi kliensek számára nyújt kiberbiz
 
 ---
 
-## Előnyt jelent
+### Előnyt jelent
 
 - Más biztonsági tanúsítványok (OSCP, OSCE, CISSP, eCPPT)  
 - Forenzikai eszközök és log-elemzési gyakorlat (ELK, Splunk)  
@@ -44,7 +44,7 @@ A SecureWave Kft. vállalati és intézményi kliensek számára nyújt kiberbiz
 
 ---
 
-## Amit kínálunk
+### Amit kínálunk
 
 - Versenyképes fizetés és juttatási csomag  
 - Részvétel izgalmas, nemzetközi biztonsági projektekben  
@@ -54,7 +54,7 @@ A SecureWave Kft. vállalati és intézményi kliensek számára nyújt kiberbiz
 
 ---
 
-## Jelentkezés
+### Jelentkezés
 
 Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
 Lehetőség szerint a dokumentum neve: `<név>_CEH.pdf` legyen.

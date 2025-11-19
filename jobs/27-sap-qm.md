@@ -1,4 +1,4 @@
-# SAP Minőségellenőr (QA szakértő)
+## SAP Minőségellenőr (QA szakértő)
 
 Munkavégzés helye: Budapest / hibrid  
 Munkavégzés típusa: Teljes munkaidő  
@@ -7,7 +7,7 @@ Jelentkezési határidő: 2025. december 31.
 
 ---
 
-## Cégünkről
+### Cégünkről
 
 A ProServ Systems Zrt. több mint 15 éve nyújt tanácsadási és fejlesztési szolgáltatásokat  
 SAP rendszerekhez, különös tekintettel az S/4HANA és SAP Cloud Platform megoldásokra.  
@@ -17,7 +17,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 
 ---
 
-## Feladatok
+### Feladatok
 
 - SAP fejlesztések és kódmódosítások funkcionális és technikai tesztelése  
 - Tesztforgatókönyvek, jegyzőkönyvek és dokumentációk készítése  
@@ -27,7 +27,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 
 ---
 
-## Elvárások
+### Elvárások
 
 - SAP rendszerek (S/4HANA, ECC) ismerete  
 - Alapvető ABAP kódolási logika megértése  
@@ -37,7 +37,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 
 ---
 
-## Előnyt jelent
+### Előnyt jelent
 
 - ISTQB tanúsítvány  
 - Automatizált tesztelés (pl. SAP TAO, Tosca, Worksoft) ismerete  
@@ -46,7 +46,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 
 ---
 
-## Amit kínálunk
+### Amit kínálunk
 
 - Stabil, nemzetközi háttérrel rendelkező munkáltató  
 - Támogató szakmai közeg és belső képzési lehetőségek  
@@ -56,7 +56,7 @@ interfészek és folyamatok megfeleljenek az üzleti és technikai elvárásokna
 
 ---
 
-## Jelentkezés
+### Jelentkezés
 
 Jelentkezésedet **PDF** formátumú önéletrajzzal várjuk az ATS rendszerünkbe.  
 Lehetőség szerint a dokumentum neve: `<név>_SAP_QA.pdf` legyen.
