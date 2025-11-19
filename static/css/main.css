@@ -136,6 +136,10 @@ p {
     color: #444;
 }
 
+.ambiguous-divider {
+    border-top: 4px solid #f00;
+}
+
 #footer {
     float: none;
     padding-bottom: 27px;

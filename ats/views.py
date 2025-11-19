@@ -198,4 +198,69 @@ def load_snippet():
 
 
 def candidates_list(request):
-    return render(request, "ats/candidates.html", {})
+    """Listázza az álláshirdetéseket és a hozzájuk érkezett fájlokat (jelentkezéseket).
+
+    Minden `jobs/[id]-*.md` fájl első nem-üres sora a pozíció neve.
+    A `jobs/<id>/` könyvtár tartalmát megszámoljuk és felsoroljuk kattintható linkként.
+    """
+    jobs_info = []
+    for file in JOBS_DIR.glob("[0-9]*-*.md"):
+        if file.name == "snippet.md":
+            continue
+        job_id = file.stem.split("-")[0].strip("[]")
+        # skip special ambiguous bucket here; we'll handle it separately
+        if job_id == "00":
+            continue
+        try:
+            text = file.read_text(encoding="utf-8")
+            first_line = next((ln for ln in text.splitlines() if ln.strip()), "")
+            title = first_line.lstrip('#').strip()
+        except (OSError, UnicodeDecodeError):
+            title = file.stem
+
+        # submissions directory is jobs/<id>/
+        subs_dir = JOBS_DIR / job_id
+        submissions = []
+        if subs_dir.exists() and subs_dir.is_dir():
+            for sub in sorted(subs_dir.iterdir()):
+                if sub.is_file():
+                    submissions.append({
+                        "name": sub.name,
+                        "url": f"/jobs/{job_id}/{sub.name}",
+                    })
+
+        jobs_info.append({
+            "id": job_id,
+            "title": title,
+            "submissions_count": len(submissions),
+            "submissions": submissions,
+        })
+
+    try:
+        jobs_info.sort(key=lambda j: int(j['id']))
+    except (ValueError, TypeError):
+        pass
+
+    # Build ambiguous / "nem teljesen tisztázott" bucket from jobs/00 and jobs/0
+    ambiguous_submissions = []
+    for special_id in ("00", "0"):
+        special_dir = JOBS_DIR / special_id
+        if special_dir.exists() and special_dir.is_dir():
+            for sub in sorted(special_dir.iterdir()):
+                if sub.is_file():
+                    ambiguous_submissions.append({
+                        "name": sub.name,
+                        "url": f"/jobs/{special_id}/{sub.name}",
+                        "origin": special_id,
+                    })
+
+    ambiguous = None
+    if ambiguous_submissions:
+        ambiguous = {
+            "id": "00",
+            "title": "Nem teljesen tisztázott",
+            "submissions_count": len(ambiguous_submissions),
+            "submissions": ambiguous_submissions,
+        }
+
+    return render(request, "ats/candidates.html", {"jobs": jobs_info, "ambiguous": ambiguous})

@@ -4,9 +4,62 @@
 {% block content %}
 
 <div class="card mb-4">
-	<div class="card-body">
-		{{ snippet_html|safe }}
-	</div>
+    <div class="card-body">
+        <h3>Jelentkezők listája</h3>
+        {% if jobs %}
+            <div class="list-group">
+            {% for job in jobs %}
+                <div class="list-group-item mb-2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <strong>{{ job.id }}</strong> — {{ job.title }}
+                        </div>
+                        <div>
+                            <span class="badge bg-secondary">{{ job.submissions_count }}</span>
+                        </div>
+                    </div>
+                    {% if job.submissions_count > 0 %}
+                        <ul class="mt-2 mb-0">
+                        {% for sub in job.submissions %}
+                            <li><a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted small mb-0">Nincs még jelentkezés.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Nem található álláshirdetés.</p>
+        {% endif %}
+    </div>
 </div>
+
+<hr class="ambiguous-divider mbt-2 mb-4">
+
+{% if ambiguous %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h4 class="text-danger mb-0">{{ ambiguous.title }}</h4>
+            </div>
+            <div>
+                <span class="badge bg-secondary">{{ ambiguous.submissions_count }}</span>
+            </div>
+        </div>
+        {% if ambiguous.submissions_count > 0 %}
+            <ul class="mb-0">
+                {% for sub in ambiguous.submissions %}
+                    <li><a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted small mb-0">Nincs még ide sorolt fájl.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 
 {% endblock content %}
