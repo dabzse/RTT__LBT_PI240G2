@@ -1,3 +1,4 @@
+import os
 import re
 
 from pathlib import Path
@@ -8,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
+from django.http import FileResponse, Http404
 
 import markdown
 
@@ -264,3 +266,28 @@ def candidates_list(request):
         }
 
     return render(request, "ats/candidates.html", {"jobs": jobs_info, "ambiguous": ambiguous})
+
+
+def job_download(_request, job_id, filename):
+    """Serve a file from jobs/<job_id>/ safely.
+
+    This is a small helper used by the candidates list links which point
+    to `/jobs/<id>/<filename>`. It ensures path traversal isn't possible
+    and returns a `FileResponse` for the file if present.
+    """
+    try:
+        # build expected directory and file paths
+        dir_path = (JOBS_DIR / str(job_id)).resolve()
+        file_path = (JOBS_DIR / str(job_id) / filename).resolve()
+    except Exception as exc:
+        raise Http404("Fájl nem található") from exc
+
+    # ensure file_path is inside dir_path
+    sep = os.path.sep
+    if not (str(file_path).startswith(str(dir_path) + sep) or str(file_path) == str(dir_path)):
+        raise Http404("Érvénytelen útvonal")
+
+    if not file_path.exists() or not file_path.is_file():
+        raise Http404("Fájl nem található")
+
+    return FileResponse(open(file_path, "rb"), as_attachment=False, filename=file_path.name)

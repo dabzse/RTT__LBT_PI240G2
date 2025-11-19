@@ -14,6 +14,8 @@ urlpatterns = [
 
     path("jobs/", views.jobs_list, name="jobs-list"),
     path("jobs/<int:job_id>/", views.job_detail, name="job-detail"),
+
+    path("jobs/<str:job_id>/<path:filename>", views.job_download, name="job-file"),
     path("jobs/detail/", views.job_detail, name="job-detail-empty"),
     path("candidates/", views.candidates_list, name="candidates-list"),
 ]
