@@ -59,7 +59,7 @@ class Command(BaseCommand):
             return re.sub(r"\s+", " ", s).strip()
 
         # Additional token classification
-        GENERIC_TOKENS = {"developer", "sap"}
+        GENERIC_TOKENS = {"developer", "sap", "fejlesztő", "fejleszto", "programozó", "programozo"}
 
         # Build map from existing jobs
         token_map = build_token_map()
@@ -68,7 +68,9 @@ class Command(BaseCommand):
             """Return analysis dict with:
             - mapped_ids: all job ids matched by any token
             - specific_ids: ids matched by non-generic tokens
-            - generic: whether a generic token (developer,sap) is present
+            - generic: whether a generic token
+                - (developer, sap, fejlesztő, fejleszto, programozó, programozo)
+            - is present
             """
             norm = normalize_name(name)
             tokens = set(norm.split())
@@ -110,6 +112,9 @@ class Command(BaseCommand):
 
         for item in sorted(uploads_dir.iterdir()):
             if not item.is_file():
+                continue
+            # Skip repository metadata files like .gitkeep
+            if item.name == ".gitkeep":
                 continue
             name = item.name
             analysis = analyze_name(name)
