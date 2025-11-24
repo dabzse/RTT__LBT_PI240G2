@@ -15,6 +15,90 @@ import markdown
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 JOBS_DIR = BASE_DIR / "jobs"
+SNIPPET_NAME = "snippet.md"
+
+
+def _read_job_title(job_md_path: Path) -> str:
+    """Return the first non-empty line of a job markdown as a cleaned title."""
+    try:
+        text = job_md_path.read_text(encoding="utf-8")
+        first_line = next((ln for ln in text.splitlines() if ln.strip()), "")
+        return first_line.lstrip('#').strip()
+    except (OSError, UnicodeDecodeError):
+        return job_md_path.stem
+
+
+def _list_submissions_for(job_id: str) -> list:
+    """Return a list of submission dicts for `jobs/<job_id>/`.
+
+    Each item is {name, url} where url is the public path used by the template.
+    """
+    subs = []
+    subs_dir = JOBS_DIR / job_id
+    if not (subs_dir.exists() and subs_dir.is_dir()):
+        return subs
+
+    for sub in sorted(subs_dir.iterdir()):
+        if sub.is_file():
+            subs.append({
+                "name": sub.name,
+                "url": f"/jobs/{job_id}/{sub.name}",
+                "classification": classify_submission(sub),
+            })
+    return subs
+
+
+def classify_submission(path: Path) -> str:
+    """Classify a submission file as 'good', 'maybe', or 'bad'.
+
+    Rules:
+    - If extension is .pdf and the PDF appears to contain selectable text (heuristic), return 'good'.
+      If the PDF appears to be image-only (scanned), return 'bad'.
+    - If extension is one of readable types (doc, docx, odt, xls, xlsx, ods, ppt, pptx, odp, md, html, txt), return 'maybe'.
+    - Otherwise return 'bad'.
+
+    This uses a lightweight heuristic for PDFs to avoid heavy dependencies.
+    """
+    try:
+        suffix = path.suffix.lower().lstrip('.')
+    except Exception:
+        return 'bad'
+
+    readable = {"doc", "docx", "odt", "xls", "xlsx", "ods", "ppt", "pptx", "odp", "md", "html", "txt"}
+
+    if suffix == 'pdf':
+        # Heuristic: inspect the first N bytes for text operators or font objects.
+        try:
+            with open(path, 'rb') as f:
+                data = f.read(65536)  # read first 64KB
+        except Exception:
+            return 'bad'
+
+        # If we find font or text operators, assume PDF contains selectable text
+        text_indicators = [b'/Font', b'/Type /Font', b'BT', b'Tj', b'Tf']
+        image_indicators = [b'/XObject', b'/Subtype /Image', b'/Image', b'/Filter /DCTDecode', b'/JPXDecode']
+
+        has_text = any(tok in data for tok in text_indicators)
+        has_image = any(tok in data for tok in image_indicators)
+
+        # If text found -> good. If only images -> bad. If ambiguous, prefer 'bad' conservatively.
+        if has_text and not has_image:
+            return 'good'
+        if has_image and not has_text:
+            return 'bad'
+        # ambiguous: check for presence of long stretches of ASCII text
+        try:
+            ascii_ratio = sum(1 for b in data if 32 <= b < 127) / max(1, len(data))
+        except Exception:
+            ascii_ratio = 0
+        if ascii_ratio > 0.25:
+            return 'good'
+        return 'bad'
+
+    if suffix in readable:
+        return 'maybe'
+
+    return 'bad'
 
 
 def home(request):
@@ -60,7 +144,7 @@ def jobs_list(request):
     """Összes álláshirdetés kilistázása"""
     jobs = []
     for file in JOBS_DIR.glob("[0-9]*-*.md"):
-        if file.name == "snippet.md":
+        if file.name == SNIPPET_NAME:
             continue
         job_id = file.stem.split("-")[0].strip("[]")
         try:
@@ -207,11 +291,11 @@ def candidates_list(request):
     """
     jobs_info = []
     for file in JOBS_DIR.glob("[0-9]*-*.md"):
-        if file.name == "snippet.md":
+        if file.name == SNIPPET_NAME:
             continue
         job_id = file.stem.split("-")[0].strip("[]")
-        # skip special ambiguous bucket here; we'll handle it separately
-        if job_id == "00":
+        # skip special ambiguous buckets here; we'll handle them separately
+        if job_id in ("00", "0"):
             continue
         try:
             text = file.read_text(encoding="utf-8")
@@ -231,41 +315,55 @@ def candidates_list(request):
                         "url": f"/jobs/{job_id}/{sub.name}",
                     })
 
-        jobs_info.append({
-            "id": job_id,
-            "title": title,
-            "submissions_count": len(submissions),
-            "submissions": submissions,
-        })
+            # compute classification counts from submissions
+            good = sum(1 for s in submissions if s.get("classification") == "good")
+            maybe = sum(1 for s in submissions if s.get("classification") == "maybe")
+            bad = sum(1 for s in submissions if s.get("classification") == "bad")
+
+            jobs_info.append({
+                "id": job_id,
+                "title": title,
+                "submissions_count": len(submissions),
+                "submissions": submissions,
+                "submissions_good_count": good,
+                "submissions_maybe_count": maybe,
+                "submissions_bad_count": bad,
+            })
 
     try:
         jobs_info.sort(key=lambda j: int(j['id']))
     except (ValueError, TypeError):
         pass
 
-    # Build ambiguous / "nem teljesen tisztázott" bucket from jobs/00 and jobs/0
-    ambiguous_submissions = []
-    for special_id in ("00", "0"):
-        special_dir = JOBS_DIR / special_id
-        if special_dir.exists() and special_dir.is_dir():
-            for sub in sorted(special_dir.iterdir()):
-                if sub.is_file():
-                    ambiguous_submissions.append({
-                        "name": sub.name,
-                        "url": f"/jobs/{special_id}/{sub.name}",
-                        "origin": special_id,
-                    })
+    # Build ambiguous buckets separately for jobs/00 and jobs/0
+    ambiguous_00 = None
+    ambiguous_0 = None
 
-    ambiguous = None
-    if ambiguous_submissions:
-        ambiguous = {
+    subs_00 = _list_submissions_for("00")
+    if subs_00:
+        ambiguous_00 = {
             "id": "00",
             "title": "Nem teljesen tisztázott",
-            "submissions_count": len(ambiguous_submissions),
-            "submissions": ambiguous_submissions,
+            "submissions_count": len(subs_00),
+            "submissions": subs_00,
+            "submissions_good_count": sum(1 for s in subs_00 if s.get("classification") == "good"),
+            "submissions_maybe_count": sum(1 for s in subs_00 if s.get("classification") == "maybe"),
+            "submissions_bad_count": sum(1 for s in subs_00 if s.get("classification") == "bad"),
         }
 
-    return render(request, "ats/candidates.html", {"jobs": jobs_info, "ambiguous": ambiguous})
+    subs_0 = _list_submissions_for("0")
+    if subs_0:
+        ambiguous_0 = {
+            "id": "0",
+            "title": "0 (előző ver.)",
+            "submissions_count": len(subs_0),
+            "submissions": subs_0,
+            "submissions_good_count": sum(1 for s in subs_0 if s.get("classification") == "good"),
+            "submissions_maybe_count": sum(1 for s in subs_0 if s.get("classification") == "maybe"),
+            "submissions_bad_count": sum(1 for s in subs_0 if s.get("classification") == "bad"),
+        }
+
+    return render(request, "ats/candidates.html", {"jobs": jobs_info, "ambiguous_00": ambiguous_00, "ambiguous_0": ambiguous_0})
 
 
 def job_download(_request, job_id, filename):

@@ -15,14 +15,26 @@
                             <strong>{{ job.id }}</strong> — {{ job.title }}
                         </div>
                         <div>
-                            <span class="badge bg-secondary">{{ job.submissions_count }}</span>
+                            <span class="badge bg-success">{{ job.submissions_good_count }}</span>
+                            <span class="badge bg-warning">{{ job.submissions_maybe_count }}</span>
+                            <span class="badge bg-danger">{{ job.submissions_bad_count }}</span>
                         </div>
                     </div>
-                    {% if job.submissions_count > 0 %}
+                    {% if job.submissions %}
                         <ul class="mt-2 mb-0">
-                        {% for sub in job.submissions %}
-                            <li><a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a></li>
-                        {% endfor %}
+                            {% for sub in job.submissions %}
+                                <li class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a>
+                                    </div>
+                                    <fieldset class="btn-group btn-group-sm" aria-label="classification">
+                                        <legend class="visually-hidden">classification</legend>
+                                        <span class="badge bg-success me-1">Good</span>
+                                        <span class="badge bg-warning text-dark me-1">Maybe</span>
+                                        <span class="badge bg-danger">Bad</span>
+                                    </fieldset>
+                                </li>
+                            {% endfor %}
                         </ul>
                     {% else %}
                         <p class="text-muted small mb-0">Nincs még jelentkezés.</p>
@@ -38,21 +50,72 @@
 
 <hr class="ambiguous-divider mbt-2 mb-4">
 
-{% if ambiguous %}
+{% if ambiguous_00 %}
 <div class="card mb-4">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
             <div>
-                <h4 class="text-danger mb-0">{{ ambiguous.title }}</h4>
+                <h4 class="text-danger mb-0">{{ ambiguous_00.title }}</h4>
             </div>
             <div>
-                <span class="badge bg-secondary">{{ ambiguous.submissions_count }}</span>
+                <span class="badge bg-info">{{ ambiguous_00.submissions_maybe_count }}</span>
+                <span class="badge bg-danger">{{ ambiguous_00.submissions_bad_count }}</span>
             </div>
         </div>
-        {% if ambiguous.submissions_count > 0 %}
+        {% if ambiguous_00.submissions %}
             <ul class="mb-0">
-                {% for sub in ambiguous.submissions %}
-                    <li><a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a></li>
+                {% for sub in ambiguous_00.submissions %}
+                                <li class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a>
+                                    </div>
+                                    <div>
+                                        {% if sub.classification == 'good' %}
+                                            <span class="badge bg-success">Good</span>
+                                        {% elif sub.classification == 'maybe' %}
+                                            <span class="badge bg-warning text-dark">Maybe</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Bad</span>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted small mb-0">Nincs még ide sorolt fájl.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<hr>
+
+{% if ambiguous_0 %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h4 class="text-danger mb-0">{{ ambiguous_0.title }}</h4>
+            </div>
+            <div>
+                <span class="badge bg-info">{{ ambiguous_0.submissions_maybe_count }}</span>
+                <span class="badge bg-danger">{{ ambiguous_0.submissions_bad_count }}</span>
+            </div>
+        </div>
+        {% if ambiguous_0.submissions %}
+            <ul class="mb-0">
+                {% for sub in ambiguous_0.submissions %}
+                    <li class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a>
+                        </div>
+                        <fieldset class="btn-group btn-group-sm" aria-label="classification">
+                            <legend class="visually-hidden">classification</legend>
+                            <span class="badge bg-success me-1">Good</span>
+                            <span class="badge bg-warning text-dark me-1">Maybe</span>
+                            <span class="badge bg-danger">Bad</span>
+                        </fieldset>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
