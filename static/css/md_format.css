@@ -1,0 +1,45 @@
+h1, h2, h3, h4 {
+    margin: 0 0 0.6rem 0;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.05rem; }
+h4 { font-size: 0.95rem; }
+
+.card-body ul, .card-body ol {
+    margin: 0 0 1rem 0;
+    padding-left: 1.25rem;
+    list-style-position: outside;
+}
+
+.card-body ul { list-style-type: disc; }
+.card-body ol { list-style-type: decimal; }
+.card-body li { margin: 0.25rem 0; }
+
+.card-body ul ul, .card-body ol ol, .card-body ul ol, .card-body ol ul {
+    padding-left: 1.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-body ul ul { list-style-type: circle; }
+.card-body ul ul ul { list-style-type: square; }
+.card-body ol ol { list-style-type: lower-alpha; }
+.card-body ol ol ol { list-style-type: lower-roman; }
+
+.card-body ul ul ul, .card-body ol ol ol {
+    padding-left: 2rem;
+}
+
+.card-body table { 
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.card-body th, .card-body td { 
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 0.35rem 0.5rem;
+}

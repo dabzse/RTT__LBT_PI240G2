@@ -3,6 +3,10 @@
 
 {% block content %}
 
-<div>TARTALOM</div>
+<div class="card mb-4">
+    <div class="card-body">
+        {{ snippet_html|safe }}
+    </div>
+</div>
 
 {% endblock content %}
