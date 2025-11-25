@@ -36,6 +36,19 @@ class Command(BaseCommand):
 
         processed = 0
         dry = options.get("dry_run", False)
+        def extract_tokens(s: str) -> list:
+            """Return a list of lowercase word-like tokens from the input string.
+
+            This uses a Unicode-aware regex to capture accented letters and digits,
+            which helps match Hungarian words like 'fejlesztő'.
+            """
+            if not s:
+                return []
+            s = s.lower()
+            # Map c++ -> cpp
+            s = s.replace("c++", " cpp ")
+            toks = re.findall(r"[a-z0-9\u00e0-\u024f]+", s, flags=re.IGNORECASE)
+            return [t.strip() for t in toks if t.strip()]
 
         def build_token_map() -> dict:
             """Scan `jobs/` filenames and build token -> set(job_id) map."""
@@ -45,21 +58,12 @@ class Command(BaseCommand):
                 # remove leading id and dash
                 rest = re.sub(r"^[0-9]+-", "", stem)
                 # normalize like filenames
-                norm = normalize_name(rest)
-                for tok in norm.split():
+                for tok in extract_tokens(rest):
                     token_map.setdefault(tok, set()).add(jf.stem.split("-")[0].strip("[]"))
             return token_map
 
-        def normalize_name(s: str) -> str:
-            s = s.lower()
-            if "c++" in s:
-                s = s.replace("c++", " cpp ")
-            s = re.sub(r"[_\-]+", " ", s)
-            s = re.sub(r"[^a-z0-9 ]+", " ", s)
-            return re.sub(r"\s+", " ", s).strip()
-
         # Additional token classification
-        GENERIC_TOKENS = {"developer", "sap", "fejlesztő", "fejleszto", "programozó", "programozo"}
+        GENERIC_TOKENS = {"developer", "sap", "fejleszt", "programoz", "automat"}
 
         # Build map from existing jobs
         token_map = build_token_map()
@@ -72,17 +76,29 @@ class Command(BaseCommand):
                 - (developer, sap, fejlesztő, fejleszto, programozó, programozo)
             - is present
             """
-            norm = normalize_name(name)
-            tokens = set(norm.split())
+            # analyze filename (without extension) and extract tokens
+            stem = re.sub(r"\.[^.]+$", "", name)
+            tokens = set(extract_tokens(stem))
             mapped_ids = set()
             specific_ids = set()
+            # Match tokens against token_map keys using exact or substring matches.
+            # This handles joined words like 'szoftverfejleszto' matching 'fejleszto'.
             for tok in tokens:
-                if tok in token_map:
-                    mapped_ids.update(token_map[tok])
-                    if tok not in GENERIC_TOKENS:
-                        specific_ids.update(token_map[tok])
+                for key, ids in token_map.items():
+                    if key == tok or key in tok or tok in key:
+                        mapped_ids.update(ids)
+                        if key not in GENERIC_TOKENS:
+                            specific_ids.update(ids)
 
-            generic_present = bool(tokens & GENERIC_TOKENS)
+            # Generic present if any generic token matches by substring as well
+            generic_present = False
+            for tok in tokens:
+                for gen in GENERIC_TOKENS:
+                    if gen == tok or gen in tok or tok in gen:
+                        generic_present = True
+                        break
+                if generic_present:
+                    break
             return {
                 "mapped_ids": mapped_ids,
                 "specific_ids": specific_ids,
@@ -117,6 +133,16 @@ class Command(BaseCommand):
             if item.name == ".gitkeep":
                 continue
             name = item.name
+            # First check extension: image formats are rejected (go to jobs/0)
+            image_exts = {'.jpg', '.jpeg', '.png', '.gif', '.tif', '.tiff', '.bmp', '.webp'}
+            suffix = item.suffix.lower()
+            if suffix in image_exts:
+                # route images to rejected bucket '0'
+                target = jobs_dir / "0"
+                if ensure_and_move(item, target, dry):
+                    processed += 1
+                continue
+
             analysis = analyze_name(name)
             mapped = analysis["mapped_ids"]
             specific = analysis["specific_ids"]

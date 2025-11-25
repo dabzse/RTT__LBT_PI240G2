@@ -18,6 +18,7 @@ urlpatterns = [
     path("jobs/<str:job_id>/<path:filename>", views.job_download, name="job-file"),
     path("jobs/detail/", views.job_detail, name="job-detail-empty"),
     path("candidates/", views.candidates_list, name="candidates-list"),
+    path("candidates/refresh/", views.refresh_process_uploads, name="candidates-refresh"),
 ]
 
 if settings.DEBUG:

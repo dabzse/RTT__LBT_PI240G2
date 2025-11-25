@@ -10,6 +10,9 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import FileResponse, Http404
+from django.views.decorators.http import require_POST
+from django.core.management import call_command
+import io
 
 import markdown
 
@@ -40,10 +43,20 @@ def _list_submissions_for(job_id: str) -> list:
 
     for sub in sorted(subs_dir.iterdir()):
         if sub.is_file():
+            # Special buckets:
+            # - `0` => always 'bad'
+            # - `00` => generally 'maybe', but image-only PDFs or image files are 'bad'
+            if job_id == "0":
+                classification = "bad"
+            elif job_id == "00":
+                detected = classify_submission(sub)
+                classification = "maybe" if detected == "maybe" else "bad"
+            else:
+                classification = classify_submission(sub)
             subs.append({
                 "name": sub.name,
                 "url": f"/jobs/{job_id}/{sub.name}",
-                "classification": classify_submission(sub),
+                "classification": classification,
             })
     return subs
 
@@ -313,6 +326,7 @@ def candidates_list(request):
                     submissions.append({
                         "name": sub.name,
                         "url": f"/jobs/{job_id}/{sub.name}",
+                        "classification": classify_submission(sub),
                     })
 
             # compute classification counts from submissions
@@ -341,12 +355,16 @@ def candidates_list(request):
 
     subs_00 = _list_submissions_for("00")
     if subs_00:
+        # Ensure non-PDF files in jobs/00 are treated as 'maybe'; PDFs keep their detected classification
+        for s in subs_00:
+            name_lower = s.get("name", "").lower()
+            if not name_lower.endswith('.pdf'):
+                s["classification"] = "maybe"
         ambiguous_00 = {
             "id": "00",
             "title": "Nem teljesen tisztázott",
             "submissions_count": len(subs_00),
             "submissions": subs_00,
-            "submissions_good_count": sum(1 for s in subs_00 if s.get("classification") == "good"),
             "submissions_maybe_count": sum(1 for s in subs_00 if s.get("classification") == "maybe"),
             "submissions_bad_count": sum(1 for s in subs_00 if s.get("classification") == "bad"),
         }
@@ -355,11 +373,9 @@ def candidates_list(request):
     if subs_0:
         ambiguous_0 = {
             "id": "0",
-            "title": "0 (előző ver.)",
+            "title": "Elutasítva",
             "submissions_count": len(subs_0),
             "submissions": subs_0,
-            "submissions_good_count": sum(1 for s in subs_0 if s.get("classification") == "good"),
-            "submissions_maybe_count": sum(1 for s in subs_0 if s.get("classification") == "maybe"),
             "submissions_bad_count": sum(1 for s in subs_0 if s.get("classification") == "bad"),
         }
 
@@ -389,3 +405,20 @@ def job_download(_request, job_id, filename):
         raise Http404("Fájl nem található")
 
     return FileResponse(open(file_path, "rb"), as_attachment=False, filename=file_path.name)
+
+
+@require_POST
+def refresh_process_uploads(request):
+    """Run the `process_uploads` management command and redirect back to candidates list.
+
+    The command output is captured and shown as a Django message.
+    """
+    buf = io.StringIO()
+    try:
+        call_command("process_uploads", stdout=buf)
+        out = buf.getvalue()
+        short = out.strip()[:200]
+        messages.success(request, f"process_uploads finished: {short}")
+    except Exception as exc:
+        messages.error(request, f"process_uploads failed: {exc}")
+    return redirect("candidates-list")
