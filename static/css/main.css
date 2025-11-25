@@ -1,0 +1,89 @@
+html, body, div, h1, h2, h3, h4, h5, h6, p, img, i, ol, ul, li, caption, article, details, nav, section, summary {
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, section {
+    display: block;
+}
+
+html, body {
+    font-family: FreeSans, helvetica, arial, sans-serif;
+    font-size: 16px;
+    color: #222;
+}
+
+li.nav-item a.nav-link {
+    color: #fff;
+    font-weight: bold;
+}
+
+.clear {
+    clear: both;
+}
+
+.nav {
+    margin-bottom: 10px;
+    border-radius: 27px;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+.nav a {
+    color: #eee;
+    background-color: #006eff;
+    display: block;
+    line-height: 2em;
+    padding: 0.5em 0.5em;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    background-color: #00ffff;
+    color: #000;
+}
+
+.navbar {
+    --bs-navbar-padding-y: 0 !important;
+}
+
+.navbar-brand {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.navbar-brand img {
+    padding: 2%;
+}
+
+.mb-5 {
+    margin-bottom: 0 !important;
+    margin-top: 5rem !important;
+}
+
+.row>* {
+    padding-right: calc(var(--bs-gutter-x) * .25);
+    padding-left: calc(var(--bs-gutter-x) * .25);
+}
+
+.alert-info {
+    padding-left: 7%;
+}
+
+p {
+    font-size: 1em;
+    line-height: 1.4em;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+#footer {
+    float: none;
+    padding-bottom: 27px;
+    width: 100%;
+    text-align: center;
+}
