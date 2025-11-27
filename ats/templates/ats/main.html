@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="hu">
+<head>
+
+    <title>Jelöltkövető rendszer</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="jelöltkövető rendszer az önéletrajzok automatikus osztályozásához">
+    <meta name="keywords" content="jelöltkövető, önéletrajz, osztályozás, HR, toborzás">
+    <meta name="author" content="ZKLSTP, UQHGWH, F9XSXO, NQKGQL">
+    <meta name="author" generator="DABZSE editor, VSCodium, zed">
+
+    <link href="{% static 'images/favicon.png' %}" rel="icon" type="image/png">
+    <link href="{% static 'css/tailwind-2.2.19.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'bs-icons/font/bootstrap-icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/md_format.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+{% include "ats/inc.navbar.html" %}
+
+<section class="py-4">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 justify-content-center">
+
+{% block content %}{% endblock content %}
+
+        </div>
+    </div>
+</section>
+</main>
+
+{% include "ats/login.html" %}
+{% include "ats/cv_dl.html" %}
+{% include "ats/inc.footinfo.html" %}
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/at.js' %}"></script>
+    <script src="{% static 'js/ajax_login.js' %}"></script>
+    <script src="{% static 'js/passwd.js' %}"></script>
+    <script src="{% static 'js/cvdl.js' %}"></script>
+
+</body>
+</html>

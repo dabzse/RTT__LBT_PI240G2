@@ -1,0 +1,15 @@
+{% extends "ats/main.html" %}
+{% load static %}
+
+{% block content %}
+    <h1>Álláshirdetések</h1>
+    <ul>
+    {% for job in jobs %}
+        <li>
+            <a href="{% url 'job-detail' job.id %}">{{ job.title }}</a>
+        </li>
+        {% empty %}
+        <li>Nincs még álláshirdetés</li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

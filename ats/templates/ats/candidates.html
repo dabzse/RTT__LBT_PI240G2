@@ -1,0 +1,118 @@
+{% extends "ats/main.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h3>Jelentkezők listája</h3>
+        {% if jobs %}
+            <div class="list-group">
+            {% for job in jobs %}
+                <div class="list-group-item mb-2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <strong>{{ job.id }}</strong> — {{ job.title }}
+                        </div>
+                        <div>
+                            <span class="badge bg-success">{{ job.submissions_good_count }}</span>
+                            <span class="badge bg-warning">{{ job.submissions_maybe_count }}</span>
+                            <span class="badge bg-danger">{{ job.submissions_bad_count }}</span>
+                        </div>
+                    </div>
+                    {% if job.submissions %}
+                        <ul class="mt-2 mb-0">
+                            {% for sub in job.submissions %}
+                                <li class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a>
+                                    </div>
+                                    <div>
+                                        {% if sub.classification == 'good' %}
+                                            <span class="badge bg-success">Good</span>
+                                        {% elif sub.classification == 'maybe' %}
+                                            <span class="badge bg-warning text-dark">Maybe</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Bad</span>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted small mb-0">Nincs még jelentkezés.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Nem található álláshirdetés.</p>
+            <form method="post" action="{% url 'candidates-refresh' %}">
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">FRISSÍTÉS</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<hr class="ambiguous-divider mbt-2 mb-4">
+
+{% if ambiguous_00 %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h4 class="text-danger mb-0">{{ ambiguous_00.title }}</h4>
+            </div>
+            <div>
+                <span class="badge bg-info">{{ ambiguous_00.submissions_maybe_count }}</span>
+            </div>
+        </div>
+        {% if ambiguous_00.submissions %}
+            <ul class="mb-0">
+                {% for sub in ambiguous_00.submissions %}
+                    <li class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted small mb-0">Nincs még ide sorolt fájl.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<hr>
+
+{% if ambiguous_0 %}
+<details class="card mb-4">
+    <summary class="card-header d-flex justify-content-between align-items-start" role="button">
+        <div>
+            <h4 class="text-danger mb-0">{{ ambiguous_0.title }}</h4>
+        </div>
+        <div>
+            <span class="badge bg-danger">{{ ambiguous_0.submissions_bad_count }}</span>
+        </div>
+    </summary>
+    <div class="card-body">
+        {% if ambiguous_0.submissions %}
+            <ul class="mb-0">
+                {% for sub in ambiguous_0.submissions %}
+                    <li class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{{ sub.url }}" target="_blank" rel="noopener">{{ sub.name }}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted small mb-0">Nincs még ide sorolt fájl.</p>
+        {% endif %}
+    </div>
+</details>
+{% endif %}
+
+{% endblock content %}
